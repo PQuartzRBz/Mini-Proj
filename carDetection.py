@@ -1,25 +1,26 @@
 import Jetson.GPIO as GPIO
 
-LED_Pin = 12
+class Detect(object):
 
+    def __init__(self, led,metal,light):
+        self.LED_Pin = led
+        self.in_metal = metal
+        self.in_light = light
 
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+        GPIO.setup(self.LED_Pin, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(self.in_metal, GPIO.IN)
+        GPIO.setup(self.in_light, GPIO.IN)
+    
+    ###  function start here ###
+    def get_car(self):
+        if(GPIO.input(self.in_metal) == GPIO.HIGH and GPIO.input(self.in_light) == GPIO.HIGH):
+            GPIO.output(self.LED_Pin, GPIO.HIGH)
+            return True
+        else:
+            GPIO.output(self.LED_Pin, GPIO.LOW)
+            return False
 
-GPIO.setup(LED_Pin, GPIO.OUT, initial=GPIO.LOW)
-
-###  function start here ###
-def get_car(im = None,io = None, dt = 0):
-    if(im == None or io == None):
-        GPIO.output(LED_Pin, GPIO.LOW)
-        return False
-    else:
-        # sm = GPIO.input(im)
-        # so = GPIO.input(io)
-        # if(sm > 200 and so > 200):
-        #     return 1
-        GPIO.output(LED_Pin, GPIO.HIGH)
-        return True
-
-###  function end here ###
+    ###  function end here ###
