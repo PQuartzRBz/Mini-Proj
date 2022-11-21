@@ -1,4 +1,4 @@
-import Jetson.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 class Detect(object):
 
@@ -7,7 +7,7 @@ class Detect(object):
         self.in_metal = metal
         self.in_light = light
 
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
 
         GPIO.setup(self.LED_Pin, GPIO.OUT, initial=GPIO.LOW)
@@ -24,3 +24,8 @@ class Detect(object):
             return False
 
     ###  function end here ###
+
+    def kill(self):
+        GPIO.output(self.LED_Pin, GPIO.LOW)
+        GPIO.output(self.in_metal, GPIO.LOW)
+        GPIO.output(self.in_light, GPIO.LOW)

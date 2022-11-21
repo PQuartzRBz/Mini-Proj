@@ -1,9 +1,9 @@
 ###  import start here ###
 import time
 from carDetection import Detect
-from gateUpdate import update_gate_state
+from gateUpdate import Gate
 from serverComm import validate_car
-from licenseReading import get_license
+from licenseReading import LiceneseReading
 # connect to server API
 ###  import end here ###
 
@@ -17,31 +17,42 @@ output_close = 15
 
 ###  system setup start here ###
 work = True
-state_gate = False # init as close/False
-state_metal = False
-state_optic = False
-timer_metal = 200
-timer_optic = 200
+state_open = False
+timer_time = 3000 # millisecond
 dt = 0
 
 mySensor = Detect(output_led,input_metal,input_optic)
+myGate = Gate(output_open,output_close)
+myReader = LiceneseReading
 ###  system setup end here ###
 
 
 ###  main start here ###
 while(work):
-    timeAtStartLoop = time.time_ns()
+    curr_time = round(time.time()*1000)
+
+    if(state_open):
+        if(timer > 0):
+            timer -= dt
+        else:
+            myGate.close()
+            state_open = False
 
     if(mySensor.get_car()):
-        licenseNumber = get_license() # AI
+        img = myReader.capture() # AI
+        licenseNumber = myReader.read(img=img)
         if(validate_car(licenseNumber)): # API
-            state_gate = True
+            state_open = True
+            timer = timer_time 
+            myGate.open()
             print('Welcome')
         else:
             print("You didn't registered for ALPR System")
+        
+
     work = False
-    update_gate_state(state_gate,dt) # GPIO
     
-    dt = time.time_ns()-timeAtStartLoop
-    print(dt)
+    dt = round(time.time()*1000)-curr_time
+    
+    print(timer)
 ###  main end here ###
