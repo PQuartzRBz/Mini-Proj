@@ -1,16 +1,25 @@
-import Jetson.GPIO as GPIO
+import RPi.GPIO as GPIO
 
-LED_Pin = 15
+class Gate(object):
+    def __init__(self,open,close):
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+        self.DI8 = open
+        self.DI9 = close
 
-GPIO.setup(LED_Pin, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(self.DI8, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(self.DI9, GPIO.OUT, initial=GPIO.LOW)
 
-###  function start here ###
-def update_gate_state(lp):
-    # GPIO OUTPUT setting
-    # NotImplemented
-    return 
 
-###  function end here ###
+    def open(self):
+        GPIO.output(self.DI8, GPIO.HIGH)
+        GPIO.output(self.DI9, GPIO.LOW)
+
+    def close(self):
+        GPIO.output(self.DI9, GPIO.HIGH)
+        GPIO.output(self.DI8, GPIO.LOW)
+
+    def kill(self):
+        GPIO.output(self.DI9, GPIO.LOW)
+        GPIO.output(self.DI8, GPIO.LOW)
