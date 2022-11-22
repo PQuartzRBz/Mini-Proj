@@ -31,7 +31,7 @@ class LiceneseReading(object):
     def read(self,img):
         # detect objects in the image (with overlay)
         results1 = self.alpr.recognize_file("/path/to/image.jpg")
-        results2 = self.alpr.recognize_ndarray()
+        results2 = self.alpr.recognize_ndarray(img)
         # print the detections
         print(results2)
         
