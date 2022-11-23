@@ -2,7 +2,7 @@
 import time
 from carDetection import Detect
 from gateUpdate import Gate
-from serverComm import validate_car
+from socket_test.serverComm import validate_car
 from licenseReading import LiceneseReading
 # connect to server API
 ###  import end here ###
