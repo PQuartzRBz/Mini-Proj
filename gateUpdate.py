@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 
 class Gate(object):
     def __init__(self,open,close):
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
 
         self.DI8 = open

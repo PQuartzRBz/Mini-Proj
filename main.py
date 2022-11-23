@@ -8,11 +8,11 @@ from licenseReading import LiceneseReading
 ###  import end here ###
 
 ### Pins setup start here ###
-input_metal = 11
-input_optic = 12
-output_led = 13
-output_open = 14
-output_close = 15
+input_metal = 17
+input_optic = 26
+
+output_open = 5
+output_close = 6
 ### Pins setup end here ###
 
 ###  system setup start here ###
@@ -21,7 +21,7 @@ state_open = False
 timer_time = 3000 # millisecond
 dt = 0
 
-mySensor = Detect(output_led,input_metal,input_optic)
+mySensor = Detect(input_metal,input_optic)
 myGate = Gate(output_open,output_close)
 myReader = LiceneseReading
 ###  system setup end here ###
