@@ -48,9 +48,6 @@ while(work):
             print('Welcome')
         else:
             print("You didn't registered for ALPR System")
-        
-
-    work = False
     
     dt = round(time.time()*1000)-curr_time
     
