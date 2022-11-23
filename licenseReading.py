@@ -21,7 +21,7 @@ class LiceneseReading(object):
 
     def read(self,img):
         po3 = subprocess.Popen(['lxterminal','alpr'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,text=True)
-        po3.stdin.write('3\n')
+        po3.stdin.write('/home/pi/Desktop/image.jpg')
         po3.stdin.flush()
         po3.wait()
         output = po3.stdout.read()
